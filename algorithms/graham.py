@@ -1,4 +1,5 @@
 import math
+import sys
 from functools import cmp_to_key
 from collections import namedtuple
 
@@ -78,25 +79,31 @@ def make_convex_hull(P):
 
 Point = namedtuple('Point', 'x y')
 
-P = [
-    Point(0, 0),
-    Point(5, 3),
-    Point(8, -2),
-    Point(4, 4),
-    Point(2, 1),
-    Point(2, 5),
-    Point(3, -1),
-    Point(7, 2),
-    Point(5, 0),
-    Point(0, 4),
-    Point(1, -1),
-    Point(7, -2),
-    Point(6, 4),
-    Point(6, 0),
-    Point(1, 3)
-]
+# P = [
+#     Point(0, 0),
+#     Point(5, 3),
+#     Point(8, -2),
+#     Point(4, 4),
+#     Point(2, 1),
+#     Point(2, 5),
+#     Point(3, -1),
+#     Point(7, 2),
+#     Point(5, 0),
+#     Point(0, 4),
+#     Point(1, -1),
+#     Point(7, -2),
+#     Point(6, 4),
+#     Point(6, 0),
+#     Point(1, 3)
+# ]
+
+P = []
+
+for line in sys.stdin:
+    x, y = line.split()
+    P.append(Point(int(x), int(y)))
 
 ch = make_convex_hull(P)
 i = 0
 for i in range(len(ch)):
-    print(f"{i+1}: ({ch[i].x}, {ch[i].y})")
+    print(f"{ch[i].x} {ch[i].y}")
