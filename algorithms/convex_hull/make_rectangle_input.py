@@ -1,7 +1,4 @@
 import random
-import math
-import matplotlib.path as mplPath
-import numpy as np
 from sys import stderr
 
 Ax, Ay = 0, 0
@@ -9,7 +6,7 @@ Bx, By = 0, 0
 Cx, Cy = 0, 0
 Dx, Dy = 0, 0
 
-K = 100
+K = 1000
 
 print("Give the size of the set of points: ", file=stderr, end="")
 size = int(input())
@@ -29,8 +26,8 @@ def gen_rectangle():
 
     Cx = Bx
     Cy = By - h
-    
-    Dx = Cx - w 
+
+    Dx = Cx - w
     Dy = Cy
 
     return h, w
@@ -47,31 +44,37 @@ def gen_points():
     S.add((Cx, Cy))
     S.add((Dx, Dy))
 
-    while True:
+    while len(S) < size:
         Px = random.randint(Ax, Bx)
-        Py = random.randint(Dy, Ay)
+        Py = Ay
+        S.add((Px, Py))  # side A-B
 
-        S.add((Px, Py))
-       # if polygon.contains_point((Px, Py)):
-       #     S.add((Px, Py))
-       #     print(len(S), file=stderr)
+        if len(S) < size:
+            Px = Bx
+            Py = random.randint(Cy, By)
+            S.add((Px, Py))  # side C-B
 
-        if len(S) >= size:
-            break
+        if len(S) < size:
+            Px = random.randint(Dx, Cx)
+            Py = Dy
+            S.add((Px, Py))  # side D-C
+
+        if len(S) < size:
+            Px = Ax
+            Py = random.randint(Dy, Ay)
+            S.add((Px, Py))  # side D-A
+
+        print(len(S), file=stderr)
 
     return S
 
 
 h, w = gen_rectangle()
-while not calc_area(h, w) < K*K*size:
+ratio = min(h, w)/max(h, w)
+while calc_area(h, w) < K*K*size or ratio < 0.25:
     h, w = gen_rectangle()
-
-# print("sides", a, b, c)
-# print("Ponto A:", Ax, Ay)
-# print("Ponto B:", Bx, By)
-# print("Ponto C:", Cx, Cy)
+    ratio = min(h, w)/max(h, w)
 
 S = gen_points()
-# print("conjunto S")
 for p in S:
     print(f"{p[0]} {p[1]}")

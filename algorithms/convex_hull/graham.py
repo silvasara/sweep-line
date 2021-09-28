@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import math
 import sys
 from functools import cmp_to_key
@@ -35,8 +36,8 @@ def sort_by_angle(A, B):
             return 1
         return 0
 
-    alfa = math.atan((A.y - P0.y)/(A.x - P0.x))
-    beta = math.atan((B.y - P0.y)/(B.x - P0.x))
+    alfa = math.atan2(A.y - P0.y, A.x - P0.x)
+    beta = math.atan2(B.y - P0.y, B.x - P0.x)
 
     if alfa < beta:
         return -1

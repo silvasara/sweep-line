@@ -15,7 +15,10 @@ def plot_and_save(all_points, polygon_points, plots_file):
     fig = plt.figure(figsize=(15, 15))
     ax = fig.add_subplot()
 
-    patch = patches.PathPatch(polygon, facecolor='lightgreen', lw=2, label='selected polygon')
+    patch = patches.PathPatch(
+        polygon, facecolor='lightgreen',
+        lw=2, label='selected polygon'
+    )
     ax.add_patch(patch)
 
     xs, ys = zip(*polygon_points)
@@ -41,15 +44,16 @@ def points_from_file(inputs_file):
         lines = f.readlines()
         points.extend([int(p) for p in line.split()]
                       for line in lines)
-
     return points
-    
-    
+
+
 def main():
     parser = argparse.ArgumentParser(
-        description='Plots all points from inputs_file and polygon from outputs_file points'
+        description='Plots all points from inputs_file and polygon '
+                    'from outputs_file points'
     )
-    parser.add_argument('inputs_file',
+    parser.add_argument(
+        'inputs_file',
         type=str,
         help='The file with all the input points'
     )
@@ -64,7 +68,7 @@ def main():
         default="plot.jpg",
         help='The file where the plot will be saved'
     )
-    
+
     args = parser.parse_args()
 
     inputs_file = Path(args.inputs_file)

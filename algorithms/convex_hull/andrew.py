@@ -34,7 +34,8 @@ def make_monotone_chain(P):
 
     upper_hull = make_hull(P)
 
-    lower_hull.pop()
+    if lower_hull:
+        lower_hull.pop()
     lower_hull.extend(upper_hull)
 
     return lower_hull

@@ -21,6 +21,5 @@ def gen_points():
 
 
 S = gen_points()
-# print("conjunto S")
 for p in S:
     print(f"{p[0]} {p[1]}")
