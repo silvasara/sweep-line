@@ -77,28 +77,17 @@ template<typename T> vector<Point<T>> make_convex_hull(const vector<Point<T>>& p
 }
 
 int main(){
-    vector<Point<int>> P {
-        {0, 0},
-        {5, 3},
-        {8, -2},
-        {4, 4},
-        {2, 1},
-        {2, 5},
-        {3, -1},
-        {7, 2},
-        {5, 0},
-        {0, 4},
-        {1, -1},
-        {7, -2},
-        {6, 4},
-        {6, 0},
-        {1, 3}
-    };
+    vector<Point<long long int>> P;
+    long long int x, y = 0;
 
+    while(cin >> x >> y){
+        P.push_back({x, y});
+    }
+    
     auto ch = make_convex_hull(P);
 
     for (size_t i = 0; i < ch.size(); ++i)
-        cout << i + 1 << ": (" << ch[i].x << ", " << ch[i].y << ")\n";
+        cout << ch[i].x << " " << ch[i].y << endl;
 
     return 0;
 }
