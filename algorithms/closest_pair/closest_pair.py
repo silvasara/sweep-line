@@ -36,8 +36,10 @@ def get_closest_pair(points):
             Q = Point(set_point.y, set_point.x)
 
             if Q.x < P.x - distance:
-                index = size_s - 1
                 S.remove(set_point)
+                size_s = len(S)
+                continue
+
             if Q.y > P.y + distance:
                 break
 
@@ -61,5 +63,5 @@ for line in sys.stdin:
 
 closest_pair = get_closest_pair(points)
 
-print(f"A: ({closest_pair.A.x}, {closest_pair.A.y})",
-      f"B: ({closest_pair.B.x}, {closest_pair.B.y})")
+print(f"{closest_pair.A.x} {closest_pair.A.y}")
+print(f"{closest_pair.B.x} {closest_pair.B.y}")

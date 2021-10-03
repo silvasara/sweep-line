@@ -1,7 +1,7 @@
 import random
 from sys import stderr
 
-K = 1000
+K = 100
 
 print("Give the size of the set of points: ", file=stderr, end="")
 size = int(input())
@@ -12,18 +12,17 @@ def gen_points():
     S = set()
 
     x_1 = 1
-    x_2 = random.randint(x_1, K)
+    y_1 = 1
 
-    i = 0
+    x_2 = random.randint(x_1+2, K)
+
+    S.add((x_1, y_1))
+    S.add((x_2, y_1))
+
     while len(S) < size:
-        y = random.randint(1, size)
-
-        if i % 2:
-            S.add((x_1, y))
-        else:
-            S.add((x_2, y))
-
-        i += 1
+        y = random.randint(y_1, K*size)
+        S.add((x_1, y))
+        S.add((x_2, y))
 
         print(len(S), file=stderr)
 

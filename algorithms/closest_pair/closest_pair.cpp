@@ -6,7 +6,7 @@ https://github.com/edsomjr/TEP/blob/master/Geometria_Computacional/slides/SL-2/c
 #include <bits/stdc++.h>
 
 using namespace std;
-using point = pair<int, int>;
+using point = pair<long long int, long long int>;
 
 #define x first
 #define y second
@@ -27,7 +27,7 @@ pair<point, point> get_closest_pair(vector<point>& ps){
     S.insert(point(ps[0].y, ps[0].x));
     S.insert(point(ps[1].y, ps[1].x));
 
-    for (int i = 2; i < N; ++i){
+    for (long long int i = 2; i < N; ++i){
         auto P = ps[i];
         auto it = S.lower_bound(point(P.y - distance, 0));
 
@@ -60,7 +60,7 @@ pair<point, point> get_closest_pair(vector<point>& ps){
 
 int main(){
     vector<point> P;
-    int x, y = 0;
+    long long int x, y = 0;
 
     while(cin >> x >> y){
         P.push_back({x, y});
@@ -68,7 +68,7 @@ int main(){
 
     auto closest_pair = get_closest_pair(P);
 
-    printf("A: (%d, %d), B: (%d, %d)\n",
+    printf("%d %d\n%d %d\n",
            closest_pair.first.first, closest_pair.first.second,
            closest_pair.second.first, closest_pair.second.second
     );
