@@ -68,7 +68,8 @@ def count_intersections(intervals):
         elif type_ == 2:  # event type 2
             y_min = min(get_index(heights, i.A.y), get_index(heights, i.B.y))
             y_max = max(get_index(heights, i.A.y), get_index(heights, i.B.y))
-            total += fenwick_tree.get_RSQ(y_max) - fenwick_tree.get_RSQ(y_min)
+            total += fenwick_tree.get_RSQ(y_max) -\
+                fenwick_tree.get_RSQ(y_min-1)
         else:  # event type 3
             y = get_index(heights, i.B.y)
             fenwick_tree.add(y, -1)
@@ -82,7 +83,7 @@ Interval = namedtuple('Interval', 'A B')
 intervals = []
 
 for line in sys.stdin:
-    x_a, y_a, x_b, y_b = line.split()
+    x_a, y_a, x_b, y_b = map(int, line.split())
     A = Point(x_a, y_a)
     B = Point(x_b, y_b)
     intervals.append(Interval(A, B))

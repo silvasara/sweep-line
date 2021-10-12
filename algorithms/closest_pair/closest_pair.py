@@ -58,8 +58,8 @@ def get_closest_pair(points):
 points = []
 
 for line in sys.stdin:
-    x, y = line.split()
-    points.append(Point(int(x), int(y)))
+    x, y = map(int, line.split())
+    points.append(Point(x, y))
 
 closest_pair = get_closest_pair(points)
 

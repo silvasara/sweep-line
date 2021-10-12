@@ -6,21 +6,22 @@ https://github.com/edsomjr/TEP/blob/master/Geometria_Computacional/slides/SL-1/p
 #include <bits/stdc++.h>
 
 using namespace std;
+using ll = long long int;
 
 class BITree {
 private:
-    vector<int> trees;
+    vector<ll> trees;
     size_t N;
 
-    int get_LSB(int n){
+    ll get_LSB(ll n){
         return n & (-n);
     }
 
 public:
     BITree(size_t n) : trees(n + 1, 0), N(n) {}
 
-    int get_RSQ(int i){
-        int sum = 0;
+    ll get_RSQ(ll i){
+        ll sum = 0;
 
         while (i >= 1){
             sum += trees[i];
@@ -30,7 +31,7 @@ public:
         return sum;
     }
 
-    void add(size_t i, int x){
+    void add(size_t i, ll x){
         if (i == 0)
             return;
 
@@ -41,23 +42,23 @@ public:
     }
 };
 
-struct Point {
-    int x, y;
+struct Point{
+    ll x, y;
 };
 
-struct Interval {
+struct Interval{
     Point A, B;
 };
 
-int get_index(const vector<int>& hs, int value){
+ll get_index(const vector<ll>& hs, ll value){
     auto it = lower_bound(hs.begin(), hs.end(), value);
 
     return it - hs.begin() + 1;     // Contagem inicia em 1
 }
 
-int count_intersections(const vector<Interval>& intervals){
+ll count_intersections(const vector<Interval>& intervals){
     struct Event {
-        int type, x;
+        ll type, x;
         size_t idx;
 
         bool operator<(const Event& e) const{
@@ -72,7 +73,7 @@ int count_intersections(const vector<Interval>& intervals){
     };
 
     vector<Event> events;
-    set<int> ys;        // Conjunto para compressão das coordenadas
+    set<ll> ys;        // Conjunto para compressão das coordenadas
 
     for (size_t i = 0; i < intervals.size(); ++i){
         auto I = intervals[i];
@@ -84,18 +85,18 @@ int count_intersections(const vector<Interval>& intervals){
         auto xmax = max(I.A.x, I.B.x);
 
         if (I.A.x == I.B.x)     // Vertical
-            events.push_back( { 2, xmin, i });
-        else{                    // Horizontal
-            events.push_back( { 1, xmin, i });
-            events.push_back( { 3, xmax, i });
+            events.push_back({2, xmin, i });
+        else{                  // Horizontal
+            events.push_back({1, xmin, i });
+            events.push_back({3, xmax, i });
         }
     }
 
     sort(events.begin(), events.end());
     
-    vector<int> hs(ys.begin(), ys.end());   // Mapa de compressão
+    vector<ll> hs(ys.begin(), ys.end());   // Mapa de compressão
     BITree fenwick(hs.size());
-    auto total = 0;
+    ll total = 0;
 
     for (const auto& event : events){
         auto I = intervals[event.idx];
@@ -127,8 +128,8 @@ int count_intersections(const vector<Interval>& intervals){
 int main(){
     vector<Interval> intervals;
 
-    int x_a, y_a;
-    int x_b, y_b;
+    ll x_a, y_a;
+    ll x_b, y_b;
 
     while(cin >> x_a >> y_a >> x_b >> y_b){
         Point A = {x_a, y_a};
