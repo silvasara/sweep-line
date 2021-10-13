@@ -1,5 +1,6 @@
 from collections import namedtuple
 import sys
+import time
 
 
 def get_determinant(P, A, B):
@@ -49,7 +50,15 @@ for line in sys.stdin:
     x, y = map(int, line.split())
     P.append(Point(x, y))
 
+begin = time.perf_counter()
+
 ch = make_monotone_chain(P)
+
+end = time.perf_counter()
+elapsed = (end - begin)
+
+print(f"Time measured: {round(elapsed, 6)} seconds.", file=sys.stderr)
+
 i = 0
 for i in range(len(ch)):
     print(f"{ch[i].x} {ch[i].y}")

@@ -1,6 +1,7 @@
 import sys
 from bisect import bisect_left
 from collections import namedtuple
+import time
 
 
 class BITree:
@@ -88,6 +89,13 @@ for line in sys.stdin:
     B = Point(x_b, y_b)
     intervals.append(Interval(A, B))
 
+begin = time.perf_counter()
+
 answer = count_intersections(intervals)
+
+end = time.perf_counter()
+elapsed = (end - begin)
+
+print(f"Time measured: {round(elapsed, 6)} seconds.", file=sys.stderr)
 
 print(answer)

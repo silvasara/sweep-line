@@ -4,8 +4,10 @@ https://github.com/edsomjr/TEP/blob/master/Geometria_Computacional/slides/CH-1/g
 */ 
 
 #include <bits/stdc++.h>
+#include <chrono>
 
 using namespace std;
+using ll = long long int;
 
 template<typename T> struct Point{
     T x, y;
@@ -77,14 +79,22 @@ template<typename T> vector<Point<T>> make_convex_hull(const vector<Point<T>>& p
 }
 
 int main(){
-    vector<Point<long long int>> P;
-    long long int x, y = 0;
+    vector<Point<ll>> P;
+    ll x, y = 0;
 
     while(cin >> x >> y){
         P.push_back({x, y});
     }
-    
+
+    auto begin = std::chrono::high_resolution_clock::now();
+
     auto ch = make_convex_hull(P);
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+
+    fprintf(stderr, "Time measured: %f seconds.\n", elapsed.count() * 1e-6);
+
 
     for (size_t i = 0; i < ch.size(); ++i)
         cout << ch[i].x << " " << ch[i].y << endl;

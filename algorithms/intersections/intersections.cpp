@@ -137,8 +137,15 @@ int main(){
 
         intervals.push_back({A, B});
     }
-
+    
+    auto begin = std::chrono::high_resolution_clock::now();
+    
     auto ans = count_intersections(intervals);
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+
+    fprintf(stderr, "Time measured: %f seconds.\n", elapsed.count() * 1e-6);
 
     cout << ans << '\n';
 

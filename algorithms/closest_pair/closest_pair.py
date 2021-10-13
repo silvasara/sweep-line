@@ -2,6 +2,7 @@ import math
 import sys
 from collections import namedtuple
 from bisect import bisect_left
+import time
 
 
 Point = namedtuple('Point', 'x y')
@@ -61,7 +62,14 @@ for line in sys.stdin:
     x, y = map(int, line.split())
     points.append(Point(x, y))
 
+begin = time.perf_counter()
+
 closest_pair = get_closest_pair(points)
+
+end = time.perf_counter()
+elapsed = (end - begin)
+
+print(f"Time measured: {round(elapsed, 6)} seconds.", file=sys.stderr)
 
 print(f"{closest_pair.A.x} {closest_pair.A.y}")
 print(f"{closest_pair.B.x} {closest_pair.B.y}")

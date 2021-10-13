@@ -67,7 +67,14 @@ int main(){
         P.push_back({x, y});
     }
 
+    auto begin = std::chrono::high_resolution_clock::now();
+    
     auto closest_pair = get_closest_pair(P);
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+
+    fprintf(stderr, "Time measured: %f seconds.\n", elapsed.count() * 1e-6);
 
     printf("%d %d\n%d %d\n",
            closest_pair.first.first, closest_pair.first.second,

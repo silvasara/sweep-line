@@ -4,8 +4,10 @@ https://github.com/edsomjr/TEP/blob/master/Geometria_Computacional/slides/CH-1/a
 */ 
 
 #include <bits/stdc++.h>
+#include <chrono>
 
 using namespace std;
+using ll = long long int;
 
 template<typename T> struct Point{
     T x, y;
@@ -58,15 +60,22 @@ template<typename T> vector<Point<T>> make_monotone_chain(const vector<Point<T>>
 }
 
 int main(){
-    vector<Point<long long int>> P;
-    long long int x, y = 0;
+    vector<Point<ll>> P;
+    ll x, y = 0;
 
 
     while(cin >> x >> y){
         P.push_back({x, y});
     }
     
-    auto ch = make_monotone_chain<long long int>(P);
+    auto begin = std::chrono::high_resolution_clock::now();
+    
+    auto ch = make_monotone_chain<ll>(P);
+
+    auto end = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - begin);
+
+    fprintf(stderr, "Time measured: %f seconds.\n", elapsed.count() * 1e-6);
 
     for (size_t i = 0; i < ch.size(); ++i)
         cout << ch[i].x << " " << ch[i].y << endl;
