@@ -4,13 +4,14 @@ import argparse
 from pathlib import Path
 
 
-def plot_and_save(all_points, plots_file):
+def plot_and_save(all_points, plots_file, size):
 
-    fig = plt.figure(figsize=(15, 15))
+    size = list(map(float, size.lower().split('x')))
+    fig = plt.figure(figsize=size)
     ax = fig.add_subplot()
 
     (xs0, ys0), *all_points = all_points
-    plt.plot(xs0, ys0, 'o', c='k', linestyle="-", label="segments")
+    plt.plot(xs0, ys0, 'o', c='k', linestyle="-", label="segmentos")
 
     for xs, ys in all_points:
         plt.plot(xs, ys, 'o', c='k', linestyle="-")
@@ -52,6 +53,13 @@ def main():
         help='The file where the plot will be saved'
     )
 
+    parser.add_argument(
+        '--size',
+        type=str,
+        default='5x5',
+        help='The size of the image in inches e.g. 5x5'
+    )
+
     args = parser.parse_args()
 
     inputs_file = Path(args.inputs_file)
@@ -59,7 +67,7 @@ def main():
 
     all_points = points_from_file(inputs_file)
 
-    plot_and_save(all_points, plots_file)
+    plot_and_save(all_points, plots_file, args.size)
 
 
 if __name__ == '__main__':

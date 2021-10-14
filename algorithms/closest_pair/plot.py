@@ -5,15 +5,16 @@ import argparse
 from pathlib import Path
 
 
-def plot_and_save(all_points, closest_points_pair, plots_file):
-    fig = plt.figure(figsize=(15, 15))
+def plot_and_save(all_points, closest_points_pair, plots_file, size):
+    size = list(map(float, size.lower().split('x')))
+    fig = plt.figure(figsize=size)
     ax = fig.add_subplot()
 
     xs, ys = zip(*all_points)
-    plt.plot(xs, ys, 'o', c='k', ms=7, label='all points')
+    plt.plot(xs, ys, 'o', c='k', ms=7, label='pontos')
 
     xs, ys = zip(*closest_points_pair)
-    plt.plot(xs, ys, 'o', c='r', ms=10, label='selected points')
+    plt.plot(xs, ys, 'o', c='r', ms=10, label='par mais próximos')
 
     ax.set(
         xlabel='X',
@@ -22,7 +23,7 @@ def plot_and_save(all_points, closest_points_pair, plots_file):
 
     plt.grid()
     plt.legend()
-    fig.savefig(plots_file)
+    fig.savefig(plots_file, format="pgf")
     plt.show()
 
 
@@ -57,6 +58,13 @@ def main():
         help='The file where the plot will be saved'
     )
 
+    parser.add_argument(
+        '--size',
+        type=str,
+        default='5x5',
+        help='The size of the image in inches e.g. 5x5'
+    )
+
     args = parser.parse_args()
 
     inputs_file = Path(args.inputs_file)
@@ -66,7 +74,7 @@ def main():
     all_points = points_from_file(inputs_file)
     closest_points_pair = points_from_file(outputs_file)
 
-    plot_and_save(all_points, closest_points_pair, plots_file)
+    plot_and_save(all_points, closest_points_pair, plots_file, args.size)
 
 
 if __name__ == '__main__':

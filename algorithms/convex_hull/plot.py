@@ -8,24 +8,26 @@ import argparse
 from pathlib import Path
 
 
-def plot_and_save(all_points, polygon_points, plots_file):
+def plot_and_save(all_points, polygon_points, plots_file, size):
     polygon_points.append(polygon_points[-1])
     polygon = path.Path(np.array(polygon_points), closed=True)
 
-    fig = plt.figure(figsize=(15, 15))
+    size = list(map(float, size.lower().split('x')))
+    fig = plt.figure(figsize=size)
+
     ax = fig.add_subplot()
 
     patch = patches.PathPatch(
         polygon, facecolor='lightgreen',
-        lw=2, label='selected polygon'
+        lw=2, label='envoltório'
     )
     ax.add_patch(patch)
 
     xs, ys = zip(*polygon_points)
-    plt.plot(xs, ys, 'o', c='k', ms=10, label='selected points')
+    plt.plot(xs, ys, 'o', c='k', ms=10)
 
     xs, ys = zip(*all_points)
-    plt.plot(xs, ys, 'o', c='r', ms=3, label='all points')
+    plt.plot(xs, ys, 'o', c='r', ms=3, label='pontos')
 
     ax.set(
         xlabel='X',
@@ -34,7 +36,7 @@ def plot_and_save(all_points, polygon_points, plots_file):
     )
 
     plt.legend()
-    fig.savefig(plots_file)
+    fig.savefig(plots_file, format="pgf")
     plt.show()
 
 
@@ -69,6 +71,13 @@ def main():
         help='The file where the plot will be saved'
     )
 
+    parser.add_argument(
+        '--size',
+        type=str,
+        default='5x5',
+        help='The size of the image in inches e.g. 5x5'
+    )
+
     args = parser.parse_args()
 
     inputs_file = Path(args.inputs_file)
@@ -78,7 +87,7 @@ def main():
     all_points = points_from_file(inputs_file)
     polygon_points = points_from_file(outputs_file)
 
-    plot_and_save(all_points, polygon_points, plots_file)
+    plot_and_save(all_points, polygon_points, plots_file, args.size)
 
 
 if __name__ == '__main__':
