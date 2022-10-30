@@ -49,7 +49,7 @@ def plot_and_save(input_file, output_file, size):
 
     plt.tight_layout()
 
-    fig.savefig(output_file, format="pgf")
+    fig.savefig(output_file, format="pdf")
 
     plt.show()
 
@@ -67,7 +67,7 @@ def main():
     parser.add_argument(
         'outputs_file',
         type=str,
-        help='The name/path of the PGF file to be created'
+        help='The name/path of the PDF file to be created'
     )
 
     parser.add_argument(

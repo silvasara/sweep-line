@@ -6,7 +6,7 @@ K = 100
 Point = namedtuple('Point', 'x y')
 Interval = namedtuple('Interval', 'A B')
 
-print("Give the size of the set of points: ", file=stderr, end="")
+print("Give the quantity of segments: ", file=stderr, end="")
 size = int(input())
 
 
